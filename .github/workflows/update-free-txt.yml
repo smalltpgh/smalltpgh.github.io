@@ -22,6 +22,9 @@
             
         - name: Install dependencies
           run: npm install node-fetch btoa atob
+
+        - name: Install dependencies
+          run: yarn add axios
     
         - name: Run script
           run: node free.js
