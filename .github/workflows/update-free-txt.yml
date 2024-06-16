@@ -24,7 +24,7 @@
           run: npm install node-fetch btoa atob
     
         - name: Run script
-          run: node fetchAndProcessReadme.js
+          run: node free.js
     
         - name: Commit and push changes
           run: |
