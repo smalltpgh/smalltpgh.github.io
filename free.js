@@ -4,7 +4,7 @@ fetch('https://api.github.com/repos/tolinkshare/freenode/contents/README.md')
         const markdownContent = atob(data.content); // 解码Base64
         const extractedText = extractTextBetweenThirdAndFourthBackticks(markdownContent); // 正则匹配节点信息
         const encodedText = btoa(extractedText); // 编码为base64
-        
+        fs.writeFileSync('free.txt', encodedText, 'utf8'); // 输出文本内容
     })
     .catch(error => console.error('Error fetching README.md:', error));
 
