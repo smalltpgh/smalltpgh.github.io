@@ -31,8 +31,8 @@ jobs:
 
     - name: Commit and push changes
       run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
+        git config --global user.name 'smalltpgh'
+        git config --global user.email 'smalltpgh@outlook.com'
         git add free.txt
         git commit -m 'Update free.txt with new encodedText'
         git push
