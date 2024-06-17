@@ -10,7 +10,7 @@ axios.get('https://api.github.com/repos/tolinkshare/freenode/contents/README.md'
         console.log('Extracted text:', extractedText); // 添加调试日志
         const encodedText = Buffer.from(extractedText).toString('base64'); // 编码为base64
         console.log('Encoded text:', encodedText); // 添加调试日志
-        fs.writeFileSync('free.txt', encodedText, 'utf8'); // 输出文本内容
+        fs.writeFileSync(path.join(__dirname, 'free.txt'), encodedText, 'utf8');
         console.log('File written successfully'); // 添加调试日志
     })
     .catch(error => console.error('Error fetching README.md:', error));
