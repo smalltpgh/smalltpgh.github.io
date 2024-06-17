@@ -5,9 +5,13 @@ axios.get('https://api.github.com/repos/tolinkshare/freenode/contents/README.md'
     .then(response => {
         const data = response.data;
         const markdownContent = Buffer.from(data.content, 'base64').toString(); // 解码Base64
+        console.log('Decoded markdown content:', markdownContent); // 添加调试日志
         const extractedText = extractTextBetweenThirdAndFourthBackticks(markdownContent); // 正则匹配节点信息
+        console.log('Extracted text:', extractedText); // 添加调试日志
         const encodedText = Buffer.from(extractedText).toString('base64'); // 编码为base64
+        console.log('Encoded text:', encodedText); // 添加调试日志
         fs.writeFileSync('free.txt', encodedText, 'utf8'); // 输出文本内容
+        console.log('File written successfully'); // 添加调试日志
     })
     .catch(error => console.error('Error fetching README.md:', error));
 
@@ -20,9 +24,10 @@ function extractTextBetweenThirdAndFourthBackticks(markdownContent) {
     if (match && match.length > 1) {
         const text = match[1].replace(/^\s*[\r\n]/gm, ''); // 去除多余空行
         const lines = text.split('\n'); // 将文本按行分割
-        const remainingLines = lines.slice(9); // 删除前x行
+        const remainingLines = lines.slice(9); // 删除前9行
         return remainingLines.join('\n'); // 将剩余的行重新组合成文本
     } else {
+        console.log('No match found');
         return "No match found";
     }
 }
