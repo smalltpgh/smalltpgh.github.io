@@ -6,13 +6,9 @@ axios.get('https://api.github.com/repos/tolinkshare/freenode/contents/README.md'
     .then(response => {
         const data = response.data;
         const markdownContent = Buffer.from(data.content, 'base64').toString(); // 解码Base64
-        console.log('Decoded markdown content:', markdownContent); // 添加调试日志
         const extractedText = extractTextBetweenThirdAndFourthBackticks(markdownContent); // 正则匹配节点信息
-        console.log('Extracted text:', extractedText); // 添加调试日志
         const encodedText = Buffer.from(extractedText).toString('base64'); // 编码为base64
-        console.log('Encoded text:', encodedText); // 添加调试日志
         fs.writeFileSync(path.join(__dirname, 'free.txt'), encodedText, 'utf8');
-        console.log('File written successfully'); // 添加调试日志
     })
     .catch(error => console.error('Error fetching README.md:', error));
 
