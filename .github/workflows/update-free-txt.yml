@@ -1,38 +1,40 @@
-    name: Update free.txt
+name: Update-free-txt.txt
 
-    on:
-      schedule:
-        - cron: '*/5 * * * *' # 每5分钟运行一次
-      push:
-        branches:
-          - main
-    
-    jobs:
-      update-free-txt:
-        runs-on: ubuntu-latest
-        
-        steps:
-        - name: Checkout repository
-          uses: actions/checkout@v2
-          
-        - name: Setup Node.js
-          uses: actions/setup-node@v2
-          with:
-            node-version: '14'
-            
-        - name: Install dependencies
-          run: npm install node-fetch btoa atob
+on:
+  schedule:
+    - cron: '*/5 * * * *' # 每5分钟运行一次
+  push:
+    branches:
+      - main
 
-        - name: Install dependencies
-          run: yarn add axios
-    
-        - name: Run script
-          run: node free.js
-    
-        - name: Commit and push changes
-          run: |
-            git config --global user.name 'github-actions'
-            git config --global user.email 'github-actions@github.com'
-            git add free.txt
-            git commit -m 'Update free.txt with new encodedText'
-            git push  
+jobs:
+  update-free-txt:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install axios
+
+    - name: Run script
+      run: node free.js
+
+    - name: Check file content
+      run: cat free.txt
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add free.txt
+        git commit -m 'Update free.txt with new encodedText'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
