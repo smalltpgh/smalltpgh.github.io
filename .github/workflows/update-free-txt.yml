@@ -1,4 +1,4 @@
-name: Update-free-txt.txt
+name: update-free-txt
 
 on:
   schedule:
@@ -25,9 +25,6 @@ jobs:
 
     - name: Run script
       run: node free.js
-
-    - name: Check file content
-      run: cat free.txt
 
     - name: Commit and push changes
       run: |
