@@ -1,0 +1,38 @@
+name: Update Free.txt
+
+on:
+  schedule:
+    - cron: '*/6 * * * *'  # 每6分钟运行一次
+  push:
+    branches:
+      - main  # 或者你希望运行该工作流的其他分支
+
+jobs:
+  update-free-txt:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # 指定Node.js版本
+
+    - name: Install axios
+      run: npm install axios  # 安装axios模块
+
+    - name: Run script
+      run: node free.js
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git pull --rebase  # 拉取最新的更改
+        git add free.txt
+        git commit -m "Update free.txt"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
