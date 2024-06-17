@@ -2,7 +2,7 @@ name: Update Free.txt
 
 on:
   schedule:
-    - cron: '*/6 * * * *'  # 每6分钟运行一次
+    - cron: '*/5 * * * *'  # 每5分钟运行一次
   push:
     branches:
       - main  # 或者你希望运行该工作流的其他分支
@@ -26,12 +26,15 @@ jobs:
     - name: Run script
       run: node free.js
 
-    - name: Commit and push changes
+    - name: Check for changes
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
         git add free.txt
-        git commit -m "Update free.txt"
-        git push
+        if git diff-index --quiet HEAD --; then
+          echo "No changes to commit"
+        else
+          git commit -m "Update free.txt"
+          git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
