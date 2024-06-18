@@ -10,6 +10,7 @@ axios.get('https://api.github.com/repos/tolinkshare/freenode/contents/README.md'
             const extractedText = extractTextBetweenThirdAndFourthBackticks(markdownContent); // 正则匹配节点信息
             const encodedText = Buffer.from(extractedText).toString('base64'); // 编码为base64
             fs.writeFileSync(path.join(__dirname, 'free.txt'), encodedText, 'utf8');
+            return new response(encodedText);
         }
     })
     .catch(error => console.error('Error fetching README.md:', error));
